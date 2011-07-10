@@ -1,0 +1,45 @@
+
+<?php if ($this->showSendReferralForm()): ?>
+    <form action="<?php echo $this->getUrl('rewardsref/customer/invites/') ?>" method="post" id="form-validates">
+        <?php if ($this->hasPredictedSignupPoints()): ?>
+            <?php echo $this->__("You could earn up to %s when your referral signs up.", $this->getPredictedSignupPoints()); ?>
+        <?php endif; ?>
+        <?php if ($this->hasPredictedFirstOrderPoints()): ?>
+            <?php echo $this->__("You could earn up to %s when your referral makes their first order.", $this->getPredictedFirstOrderPoints()); ?>
+        <?php endif; ?>
+
+        <fieldset class="group-select" style="margin-bottom: 0px;">
+            <input type="hidden" value="Il1NwrpfsCuSmp03" name="form_key"/>
+
+            <h4 class="legend"><?php echo $this->__('Send Invitations') ?></h4>
+                <div>
+                    <label><?php echo $this->__('To') ?></label>
+                    <textarea name="contacts" id="recipient_list" style="width:100%;" rows="3" cols="80" ></textarea>
+                    <br/>  
+                    <?php echo $this->getChildHtml('plaxo_contact_chooser'); ?>
+                    <i><?php echo $this->__('&quot;name&quot; &lt;email@address.com&gt;'); ?></i>
+                    <br/><br/>
+                </div>
+                
+                <div>
+                    <label><?php echo $this->__('Subject (Optional)') ?></label>
+                    <textarea name="subject" id="subject" class="required-entry textarea" style="width:100%;" rows="1" cols="80" title="<?php echo $this->__('Subject') ?>"  ></textarea>
+                    <div>
+                        <label><?php echo $this->__('Message (Optional)') ?> </label>
+                        <textarea name="message" id="message" class="required-entry textarea" style="width:100%;" rows="4" cols="80" title="<?php echo $this->__('Short Message') ?>"  ></textarea>
+                    </div>
+                </div>
+
+                <div class="button-set" style="margin-top:0px">
+                    <!--<a href="<?php echo $this->getBackUrl() ?>" class="left">&laquo; <?php echo $this->__('Back') ?></a>-->
+                    <button class="form-button" type="submit"><span><?php echo $this->__('Send') ?></span></button>
+                </div>
+        </fieldset>
+    </form>
+
+    <script type="text/javascript">
+        var dataForm = new VarienForm('form-validate', true);
+    </script>
+
+
+<?php endif; ?>

@@ -1,0 +1,18 @@
+
+<?php if($this->isMailChimpProEnabled(false)): ?>
+	<input type="hidden" name="is_general" id="is_general" value="1" />
+	<?php if($this->getNewsletterGroups(false)): ?>
+		<fieldset id="generalFieldset" >
+			<?php echo $this->getGroupInputs(null,$this->getCustomer()->getStoreId(),false); ?>
+			<script type="text/javascript">
+				var id = ($('subscription'))? $('subscription'): $('is_subscribed');
+				Mailchimppro.general.initialize(id,'generalFieldset');
+			</script>
+		</fieldset>
+	<?php endif; ?>
+	<?php if($this->isForcedToRegisterSubscribe()): ?>
+		<script type="text/javascript">
+			Mailchimppro.general.hide('is_subscribed');
+		</script>
+	<?php endif; ?>
+<?php endif; ?>

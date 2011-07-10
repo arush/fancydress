@@ -1,0 +1,17 @@
+
+<?php if($this->isMailChimpProEnabled($this->getCustomer()->getStoreId())): ?>
+	<?php if($this->getSubscribedAddiotionalLists()): ?>
+	    <div class="box-title">
+	        <h3><?php echo $this->__('Additional Newsletters Lists') ?></h3>
+	    </div>
+	    <div class="box-content">
+		<?php foreach ($this->getSubscribedAddiotionalLists() as $_list):?>
+			<?php if($_list->getIsSubscribed()): ?>
+				<p style="margin-bottom:0px;"><?php echo $this->htmlEscape($_list->getName()) ?></p>
+			<?php endif; ?>
+		<?php endforeach;?>
+		</div>
+	<?php endif;?>
+	<img alt="Powered By MailChimp" src="<?php echo $this->getSkinUrl('mailchimppro/images/mailchimp_tile.gif') ?>" style="float:right;"/>
+<?php endif;?>
+

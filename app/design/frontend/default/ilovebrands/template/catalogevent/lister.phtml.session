@@ -1,0 +1,196 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2009 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+
+/**
+ * Catalog Event category page
+ *
+ * @see Enterprise_CatalogEvent_Blockevents[$i]_Lister
+ * @author edited by Edward Chen
+ */
+?>
+<div id="home-col-left">
+	<?php
+		$events = $this->getEvents();
+		$numEvents = count($events);
+		for($i = 0; $i < $numEvents; $i++) {
+			$_category = $events[$i]->getCategory();
+			$category = Mage::getModel('catalog/category')->load($_category->getId()); /* @TODO should be re-factored into the widget when time allows - ed */
+			if ($i < 2) {
+			?>
+			<div class="cat-banner">
+				<!-- category event image -->
+				<div class="cat-banner-img">
+					<a class="category-show" href="<?php echo $this->getCategoryUrl($_category); ?>" title="<?php echo $this->htmlEscape($_category->getName()) ?>">
+						<?php if ($this->getEventImageUrl($events[$i])): ?>
+							<img src="<?php echo $this->getEventImageUrl($events[$i]); ?>" class="banner-img" title="<?php echo $this->htmlEscape($_category->getName()) ?>" alt="<?php echo $this->htmlEscape($_category->getName()) ?>" />
+						<?php else: ?>
+							<span class="category-name"><?php echo $this->htmlEscape($_category->getName()) ?></span>
+						<?php endif; ?>
+					</a>
+				</div>
+				
+				<!-- category description and timer -->
+				<div class="cat-banner-desc">				
+					<!-- timer -->
+					<div class="event <?php echo $events[$i]->getStatus()?>">
+						<?php switch ($events[$i]->getStatus()):
+							case 'upcoming': ?>
+							<div class="event-dates">
+								<p class="start"><strong class="date-part"><?php echo $this->getEventDate('start', $events[$i]); ?></strong><span class="time-part"><?php echo $this->getEventTime('start', $events[$i], 'hh a zzz'); ?></span></p>
+								<p class="end"><span class="delimiter-part">-</span><strong class="date-part"><?php echo $this->getEventDate('end', $events[$i]); ?></strong><span class="time-part"><?php echo $this->getEventTime('end', $events[$i], 'hh a zzz'); ?></span></p>
+							</div>
+							<!--<a class="event-button button" href="<?php echo $this->getCategoryUrl($_category); ?>"><span><?php echo $this->helper('enterprise_catalogevent')->__('Preview Sale') ?></span></a>-->
+
+							<?php break;
+							case 'open': ?>
+							<div class="event-ticker" id="<?php echo $this->getHtmlId(); ?>-event-ticker-<?php echo $events[$i]->getId()?>">
+								<div class="container">
+									<span class="days">00</span><span class="delimiter">d&nbsp;</span><span class="hour">00</span><span class="delimiter">h&nbsp;</span><span class="minute">00</span><span class="delimiter">m&nbsp;</span><span class="second">00</span><span class="delimiter">s&nbsp;</span><span class="delimiter">left</span>
+								</div>
+							</div>
+							<div class="timer-bars" id="<?php echo $this->getHtmlId(); ?>-event-timeslide-<?php echo $events[$i]->getId()?>">
+								<div class="container">
+									<!--<div class="timer-days"><span class="days">00</span></div>-->
+									<div class="timer-hours"><span class="hour">00</span></div>
+									<div class="timer-minutes"><span class="minute">00</span></div>
+									<div class="timer-seconds"><span class="second">00</span></div>
+								</div>
+							</div>
+							<script type="text/javascript">
+								new Enterprise.CatalogEvent.Ticker('<?php echo $this->getHtmlId(); ?>-event-ticker-<?php echo $events[$i]->getId()?>', <?php echo $this->getSecondsToClose($events[$i]); ?>);
+								new Enterprise.CatalogEvent.TimeSlide('<?php echo $this->getHtmlId(); ?>-event-timeslide-<?php echo $events[$i]->getId()?>', <?php echo $this->getSecondsToClose($events[$i]); ?>);
+							</script>
+							<!--<a class="event-button button" href="<?php echo $this->getCategoryUrl($_category); ?>"><span><?php echo $this->helper('enterprise_catalogevent')->__('Go To Sale') ?></span></a>-->
+
+							<?php break;
+							case 'closed': ?>
+							<div class="event-dates">
+								<p class="start"><strong class="date-part"><?php echo $this->getEventDate('start', $events[$i]); ?></strong><span class="time-part"><?php echo $this->getEventTime('start', $events[$i], 'hh a zzz'); ?></span></p>
+								<p class="end"><span class="delimiter-part">-</span><strong class="date-part"><?php echo $this->getEventDate('end', $events[$i]); ?></strong><span class="time-part"><?php echo $this->getEventTime('end', $events[$i], 'hh a zzz'); ?></span></p>
+							</div>
+							<!--<a class="event-button" href="<?php echo $this->getCategoryUrl($_category); ?>"><span><?php echo $this->helper('enterprise_catalogevent')->__('View Sale') ?></span></a>-->
+
+							<?php break; ?>
+						<?php endswitch; ?>						
+						<!--<strong class="status"><?php echo $this->getStatusText($events[$i]); ?></strong>-->
+						<!-- category description -->
+						<p class="banner-desc"><?php echo $category->getData('description'); ?></p>
+					</div>
+				</div>
+				<!-- category title -->
+				<div class="cat-banner-title">
+					<h2 class="cufon"><a href="<?php echo $this->getCategoryUrl($_category); ?>" title="<?php echo $this->htmlEscape($_category->getName()) ?>"><?php echo $this->htmlEscape($_category->getName()) ?></a></h2>
+				</div>
+			</div>			
+			<?php
+			} else {
+			?>
+				<div class="cat-box">
+					<div class="cat-box-img">
+						<a class="category-show" href="<?php echo $this->getCategoryUrl($_category); ?>" title="<?php echo $this->htmlEscape($_category->getName()) ?>">
+							<?php if ($this->getEventImageUrl($events[$i])): ?>
+								<img src="<?php echo $this->getEventImageUrl($events[$i]); ?>" title="<?php echo $this->htmlEscape($_category->getName()) ?>" alt="<?php echo $this->htmlEscape($_category->getName()) ?>" />
+							<?php else: ?>
+								<span class="category-name"><?php echo $this->htmlEscape($_category->getName()) ?></span>
+							<?php endif; ?>
+						</a>
+					</div>
+					<div class="cat-box-desc">
+						<!-- timer -->
+						<div class="event <?php echo $events[$i]->getStatus()?>">
+							<?php switch ($events[$i]->getStatus()):
+								case 'upcoming': ?>
+								<div class="event-dates">
+									<p class="start"><strong class="date-part"><?php echo $this->getEventDate('start', $events[$i]); ?></strong><span class="time-part"><?php echo $this->getEventTime('start', $events[$i], 'hh a zzz'); ?></span></p>
+									<p class="end"><span class="delimiter-part">-</span><strong class="date-part"><?php echo $this->getEventDate('end', $events[$i]); ?></strong><span class="time-part"><?php echo $this->getEventTime('end', $events[$i], 'hh a zzz'); ?></span></p>
+								</div>
+								<!--<a class="event-button button" href="<?php echo $this->getCategoryUrl($_category); ?>"><span><?php echo $this->helper('enterprise_catalogevent')->__('Preview Sale') ?></span></a>-->
+
+								<?php break;
+								case 'open': ?>
+								<div class="event-ticker" id="<?php echo $this->getHtmlId(); ?>-event-ticker-<?php echo $events[$i]->getId()?>">
+									<div class="container">
+										<span class="days">00</span><span class="delimiter">d&nbsp;</span><span class="hour">00</span><span class="delimiter">h&nbsp;</span><span class="minute">00</span><span class="delimiter">m&nbsp;</span><span class="second">00</span><span class="delimiter">s&nbsp;</span><span class="delimiter">&nbsp;left</span>
+									</div>
+								</div>
+								<script type="text/javascript">
+									new Enterprise.CatalogEvent.Ticker('<?php echo $this->getHtmlId(); ?>-event-ticker-<?php echo $events[$i]->getId()?>', <?php echo $this->getSecondsToClose($events[$i]); ?>);
+								</script>
+								<!--<a class="event-button button" href="<?php echo $this->getCategoryUrl($_category); ?>"><span><?php echo $this->helper('enterprise_catalogevent')->__('Go To Sale') ?></span></a>-->
+
+								<?php break;
+								case 'closed': ?>
+								<div class="event-dates">
+									<p class="start"><strong class="date-part"><?php echo $this->getEventDate('start', $events[$i]); ?></strong><span class="time-part"><?php echo $this->getEventTime('start', $events[$i], 'hh a zzz'); ?></span></p>
+									<p class="end"><span class="delimiter-part">-</span><strong class="date-part"><?php echo $this->getEventDate('end', $events[$i]); ?></strong><span class="time-part"><?php echo $this->getEventTime('end', $events[$i], 'hh a zzz'); ?></span></p>
+								</div>
+								<!--<a class="event-button" href="<?php echo $this->getCategoryUrl($_category); ?>"><span><?php echo $this->helper('enterprise_catalogevent')->__('View Sale') ?></span></a>-->
+
+								<?php break; ?>
+							<?php endswitch; ?>						
+							<!--<strong class="status"><?php echo $this->getStatusText($events[$i]); ?></strong>-->
+							
+							<!-- category description -->
+							<p class="box-desc"><?php echo $category->getData('description'); ?></p>
+						</div>
+					</div>
+					<!-- category title -->
+					<div class="cat-box-title">
+						<h2 class="cufon"><a href="<?php echo $this->getCategoryUrl($_category); ?>" title="<?php echo $this->htmlEscape($_category->getName()) ?>"><?php echo $this->htmlEscape($_category->getName()) ?></a></h2>
+					</div>
+				</div>
+			<?php
+			}
+		}
+	?>
+</div>
+
+<script>
+	/* fadein/fadeout function */
+	$j = jQuery.noConflict();
+	$j(document).ready(function() {
+		$j('.cat-banner').hover(function() {		
+			$j(this).children(':last').children(':last').children(':last').addClass('over');
+			Cufon.refresh();
+			$j('.cat-banner-desc', this).animate({opacity: "show"}, "slow");
+		}, function() {							
+			$j(this).children(':last').children(':last').children(':last').removeClass('over');
+			Cufon.refresh();
+			$j('.cat-banner-desc', this).animate({opacity: "hide"}, "fast");
+		});						
+								
+		
+		$j('.cat-box').hover(function() {
+			$j(this).children(':last').children(':last').children(':last').addClass('over');
+			Cufon.refresh();
+			$j('.cat-box-desc', this).animate({opacity: "show"}, "slow");		
+		}, function() {
+			$j(this).children(':last').children(':last').children(':last').removeClass('over');
+			Cufon.refresh();
+			$j('.cat-box-desc', this).animate({opacity: "hide"}, "fast");		
+		});
+	});
+</script>

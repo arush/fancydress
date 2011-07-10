@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<layout>
+	<default>
+		<reference name="head">
+			<action method="addCss"><stylesheet>mailchimppro/css/MailChimpPro.css</stylesheet></action>
+            <action method="addItem"><type>skin_js</type><name>mailchimppro/js/MailChimpPro.js</name></action>
+		</reference>
+	</default>
+
+	<checkout_cart_index translate="label">
+        <reference name="checkout.cart">
+            <block type="mailchimpPro/newsletter_subscribe" name="smallbox" as="smallbox" template="mailchimppro/boxes/generalNewsletterBox.phtml">
+	            <block type="mailchimpPro/customer_newsletter" name="generalNewsletter" as="generalNewsletter" template="mailchimppro/boxes/generalNewsletter.phtml"/>
+            </block>
+        </reference>
+    </checkout_cart_index>
+
+    <checkout_onepage_index translate="label">
+	    <reference name="checkout.onepage.billing">
+            <block type="mailchimpPro/newsletter_subscribe" name="mediumbox" as="mediumbox" template="mailchimppro/boxes/generalNewsletterMediumBox.phtml">
+	            <block type="mailchimpPro/customer_newsletter" name="generalNewsletter" as="generalNewsletter" template="mailchimppro/boxes/generalNewsletter.phtml"/>
+            </block>
+			</reference>
+    </checkout_onepage_index>
+
+    <customer_account_create translate="label">
+		<reference name="customer_form_register">
+            <block type="mailchimpPro/customer_newsletter" name="generalNewsletter" as="generalNewsletter" template="mailchimppro/boxes/generalNewsletter.phtml"/>
+		</reference>
+    </customer_account_create>
+
+	<customer_account_index translate="label">
+		<reference name="customer_account_dashboard_info">
+            <block type="mailchimpPro/customer_newsletter" name="additionalNewsletter" as="additionalNewsletter" template="mailchimppro/boxes/additionalNewsletter.phtml"/>
+		</reference>
+	</customer_account_index>
+
+    <newsletter_manage_index translate="label">
+		<reference name="customer_newsletter">
+            <block type="mailchimpPro/customer_newsletter" name="generalNewsletter" as="generalNewsletter" template="mailchimppro/boxes/generalNewsletter.phtml"/>
+            <block type="mailchimpPro/customer_newsletter" name="bigBox" as="bigBox" template="mailchimppro/boxes/additionalNewsletterBox.phtml"/>
+		</reference>
+    </newsletter_manage_index>
+</layout>

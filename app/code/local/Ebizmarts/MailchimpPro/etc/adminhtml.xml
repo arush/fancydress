@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<config>
+	<acl>
+	    <resources>
+	      <admin>
+		    <children>
+		        <system>
+		            <children>
+		                <config>
+		                    <children>
+		                        <mailchimpPro translate="title" module="mailchimpPro">
+		                            <title>MailChimp Pro Configuration</title>
+		                        </mailchimpPro>
+		                    </children>
+		                </config>
+		            </children>
+		        </system>
+		        <newsletter>
+                  <children>
+	                  <mailchimpPro translate="title">
+		                  <title>MailChimp Pro</title>
+		                  <children>
+			                  <webhooks translate="title">
+		                          <title>WebHooks</title>
+		                      </webhooks>
+		                      <subscribers translate="title">
+		                          <title>Subscribers</title>
+		                      </subscribers>
+		                  </children>
+	                  </mailchimpPro>
+                  </children>
+             </newsletter>
+		    </children>
+		</admin>
+	    </resources>
+	</acl>
+	<menu>
+    	<newsletter>
+        	<children>
+            	<mailchimpPro translate="title" module="mailchimpPro">
+                	<title>MailChimp Pro</title>
+                    <sort_order>50</sort_order>
+                    <depends><module>Ebizmarts_MailchimpPro</module></depends>
+					<action>mailchimpPro/adminhtml_webHooks</action>
+	                <children>
+	                    <webhooks translate="title" module="mailchimpPro">
+	                        <title>WebHooks</title>
+	                        <action>mailchimpPro/adminhtml_webHooks</action>
+	                    </webhooks>
+	                    <subscribers translate="title" module="mailchimpPro">
+	                        <title>Subscribers</title>
+	                        <action>mailchimpPro/adminhtml_subscribers</action>
+	                    </subscribers>
+	                </children>
+                </mailchimpPro>
+            </children>
+        </newsletter>
+    </menu>
+</config>

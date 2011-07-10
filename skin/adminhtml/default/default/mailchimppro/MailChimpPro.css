@@ -1,0 +1,10 @@
+/* PayPal */
+h3.mailchimppro-header { background:url(ebizmarts-mailchimp-small.png) no-repeat 0 20px; height:60px; overflow:hidden; padding:0; margin-top:0;width:286px; }
+
+ul.tabs a.mailchimppro-section,
+ul.tabs a.mailchimppro-section:hover { background:url(../images/tabs_span_bg.gif) repeat-x 0 100%; border-bottom:none; padding:0.5em 0.5em 0.28em 1.5em; }
+ul.tabs a.mailchimppro-section:hover { background-color:#d8e6e6; }
+ul.tabs a.mailchimppro-section.active,
+ul.tabs a.mailchimppro-section.active:hover { background-color:#fff; }
+ul.tabs a.mailchimppro-section span,
+ul.tabs a.mailchimppro-section:hover span { background:url(ebizmarts-mailchimp-section.png) no-repeat 0 0; height:0; overflow:hidden; padding:14px 0 0; width:103px; }

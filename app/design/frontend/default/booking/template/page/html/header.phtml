@@ -1,0 +1,88 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2009 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+
+<div class="header-container">
+    <div class="header">
+		<div class="header-panel">
+			<!-- REMOVING SEARCH -->
+			<?php //echo $this->getChildHtml('topSearch') ?>	
+			<div class="checkout-link"><?php echo $this->getChildHtml('checkoutLinks') ?></div>	
+			<?php echo $this->getChildHtml('topCart') ?>
+			<?php echo $this->getChildHtml('accountLinks') ?>	
+			  <?php if (Mage::getSingleton('customer/session')->isLoggedIn()):?> 
+                <?php echo $this->getChildHtml('topLinks') ?>
+                    <?php /*WDCA CODE BEGIN*/ ?>
+                    <?php echo $this->getChildHtml('rewardsHeader') ?>
+                    <?php /*WDCA CODE END*/ ?>
+                    
+                    <div id="nav-invite"><a href="/index.php/rewardsref/customer/index/"></a></div>
+                    <div class="tooltip">
+                    	<div class="nav-invite">
+                        <p>Invite a friend</p>
+                        <form action="<?php echo $this-> getBaseUrl(); ?>rewardsref/customer/invites/" method="post" id="form-validates">
+                        <input type="hidden" value="Il1NwrpfsCuSmp03" name="form_key">
+                         <textarea type="hidden" name="message" style="display: none;" >I'm a Member of evogue, an invitation-only shopping club for everything luxury - at private sale prices. New Collections go live a few times each month - but are available only for a short time. Sign up now with this invitation!</textarea>
+                        <input type="text" name="contacts"  id="recipient_list" value="Invitee's email address" onFocus=this.value="">
+                        <button type="submit">SEND</button>
+                        </form>
+                        <img src="<?php echo $this->getSkinUrl();?>images/points.jpg"/ width="44" height="41">
+                        <span>Earn &pound;15 (1500 points) for each referral</span>
+                        </div>
+                    </div>
+					<script>
+                    jQuery(document).ready(function() {
+                        jQuery("#nav-invite").tooltip({
+                            offset: [21, 0],
+							position: 'bottom center',
+							relative: true,
+                            effect: 'slide'
+                            })
+                        ;});
+                    </script>
+              <?php endif?>
+		</div>
+        <div class="branding">
+        <?php if ($this->getIsHomePage()):?>
+            <h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1>
+            <?php else:?>
+            <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
+        <?php endif?>
+        </div>		
+		<?php echo $this->getChildHtml('topMenu') ?>
+      <?php /*?><?php if (Mage::getSingleton('customer/session')->isLoggedIn()):?> 
+		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('content-menu')->toHtml() ?>
+      <?php else:?>
+		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('content-menu-2')->toHtml() ?>
+      <?php endif?><?php */?>
+    </div>
+    
+    
+</div>
+

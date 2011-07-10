@@ -1,0 +1,16 @@
+<?php ?>
+
+<script id="plaxo_script_util" type="text/javascript" ></script>
+<script id="plaxo_script_basic" type="text/javascript" ></script>
+<script id="plaxo_script_abc_launcher" type="text/javascript" ></script>
+<script type="text/javascript">
+    // delay loading scripts untill page loaded
+    window.onload=function(){
+        document.getElementById('plaxo_script_util').src="http://www.plaxo.com/css/m/js/util.js";
+        document.getElementById('plaxo_script_basic').src="http://www.plaxo.com/css/m/js/basic.js";
+        document.getElementById('plaxo_script_abc_launcher').src="http://www.plaxo.com/css/m/js/abc_launcher.js";
+    }
+    // OPTIONAL: do something after the new data has been populated in your textarea
+    function onABCommComplete() { }
+</script>
+<a href="#" onclick="showPlaxoABChooser('recipient_list', '/index.php/rewardsref/customer/plaxocb'); return false"><?php echo $this->__('Add Contacts') ?></a>
